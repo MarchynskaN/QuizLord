@@ -94,11 +94,11 @@ allAnswers.forEach((e) => {
 //load the quiz data
 function getquiz() {
   uncheck();
-question.innerText = Questions[index].question;
-a.innerText = Questions[index].a;
-b.innerText = Questions[index].b;
-c.innerText = Questions[index].c;
-d.innerText = Questions[index].d;
+  question.innerText = Questions[index].question;
+  a.innerText = Questions[index].a;
+  b.innerText = Questions[index].b;
+  c.innerText = Questions[index].c;
+  d.innerText = Questions[index].d;
 }
 
 function runValidate() {
@@ -111,7 +111,7 @@ function runValidate() {
       i++;        
   }
 
-  if (!bool) finalScoreH.innerText = "Please choose your answer!";
+  if (!bool) finalScoreH.innerText = "Please choose your answer! or Hit the villain";
   return bool;
 }
 
@@ -127,6 +127,7 @@ btn.addEventListener('click', () => {
     finalScoreH.innerText = "";
     if (answers == Questions[index].correct) {
       score++;
+      disablebuttons();
       firstKill();
       if(score == 2 && index == 1){
         console.log("this is second kill");
@@ -165,13 +166,13 @@ btn.addEventListener('click', () => {
         location.reload();
       })
     } else {
-      finalKill();
-      finalScore = 'You won!';
-      let finalScoreH = document.createElement('h2');
-      container.appendChild(finalScoreH);
-      img.remove();
-      video.style.display = "block";
-      video.src += "?autoplay=1";
+        finalKill();
+        finalScore = 'You won!';
+        let finalScoreH = document.createElement('h2');
+        container.appendChild(finalScoreH);
+        img.remove();
+        video.style.display = "block";
+        video.src += "?autoplay=1";
     }
       finalScoreH.innerText = finalScore;
   }
@@ -185,43 +186,61 @@ startquiz();
 
 /* below is the most painful code */
 
+function disablebuttons(){
+  document.getElementById('a').disabled = true;
+  document.getElementById('b').disabled = true;
+  document.getElementById('c').disabled = true;
+  document.getElementById('d').disabled = true;
+}
+
+function enablebuttons(){
+  document.getElementById('a').disabled = false;
+  document.getElementById('b').disabled = false;
+  document.getElementById('c').disabled = false;
+  document.getElementById('d').disabled = false;
+}
+
 //first part removal
 function firstKill(){
-  finalScoreH.innerText = "Correct! Now hit the villain wherever you want!";
-  console.log("remove first part please");
-  //remove head first
-function removeHead(){
-  img.style.display="none";
-  legs.remove();
-  hands.remove();
-  head.remove();
-  img2.style.display="flex";
-  finalScoreH.innerText = "Keep going";
-}
-head.addEventListener("click", removeHead);
+    finalScoreH.innerText = "Correct! Now hit the villain wherever you want!";
+    console.log("remove first part please");
+    //remove head first
+    function removeHead(){
+      img.style.display="none";
+      legs.remove();
+      hands.remove();
+      head.remove();
+      img2.style.display="flex";
+      finalScoreH.innerText = "Keep going";
+      enablebuttons();
+    }
+    head.addEventListener("click", removeHead);
 
-//remove legs first
-function removeLegs(){
-  img.style.display="none";
-  legs.remove();
-  hands.remove();
-  head.remove();
-  img3.style.display="flex";
-  finalScoreH.innerText = "Keep going";
-}
-legs.addEventListener("click", removeLegs);
+    //remove legs first
+    function removeLegs(){
+      img.style.display="none";
+      legs.remove();
+      hands.remove();
+      head.remove();
+      img3.style.display="flex";
+      finalScoreH.innerText = "Keep going";
+      enablebuttons();
+    }
+    legs.addEventListener("click", removeLegs);
 
-//remove arms first
-function removeHands(){
-  img.style.display="none";
-  legs.remove();
-  hands.remove();
-  head.remove();
-  img4.style.display="flex";
-  finalScoreH.innerText = "Keep going";
-}
-hands.addEventListener("click", removeHands);
-}
+    //remove arms first
+    function removeHands(){
+      img.style.display="none";
+      legs.remove();
+      hands.remove();
+      head.remove();
+      img4.style.display="flex";
+      finalScoreH.innerText = "Keep going";
+      enablebuttons();
+    }
+    hands.addEventListener("click", removeHands);
+
+  }
 
 //second part removal
 function secondKill(){
@@ -235,6 +254,7 @@ function secondKill(){
     // legs2.remove();
     // hands2.remove();
     finalScoreH.innerText = "Keep going";
+    enablebuttons();s
   }
   legs2.addEventListener("click", removeHeadLegs);
   function removeHeadArms(){
@@ -244,6 +264,7 @@ function secondKill(){
     // legs2.remove();
     // hands2.remove();
     finalScoreH.innerText = "Keep going";
+    enablebuttons();
   }
   hands2.addEventListener("click", removeHeadArms);
 
@@ -252,12 +273,14 @@ function secondKill(){
     head3.remove();
     hands3.remove();
     finalScoreH.innerText = "Keep going";
+    enablebuttons();
   }
   function removeArmsLegs(){
     img3.src = imgSources[5];
     head3.remove();
     hands3.remove();
     finalScoreH.innerText = "Keep going";
+    enablebuttons();
   }
   head3.addEventListener("click", removeLegsHead);
   hands3.addEventListener("click", removeArmsLegs);
@@ -266,16 +289,19 @@ function secondKill(){
     legs4.remove();
     head4.remove();
     finalScoreH.innerText = "Keep going";
+    enablebuttons();
   }
   function removeLegsArms(){
     img4.src = imgSources[5];
     head4.remove();
     legs4.remove();
     finalScoreH.innerText = "Keep going";
+    enablebuttons();
   }
     head4.addEventListener("click", removeArmsHead);
     legs4.addEventListener("click", removeLegsArms);
     console.log("killed second time");
+    
 }
 
 //remove image fully
@@ -283,6 +309,8 @@ function finalKill(){
   document.querySelector('figcaption').style.display="none";
   noheadlegimg.style.display="none";
   noheadarmimg.style.display="none";
+  document.getElementById('inform3').style.display = "none"; //new
+  document.getElementById('inform4').style.display = "none"; //new
   //nolegarmimg.style.display="none";
 }
 
